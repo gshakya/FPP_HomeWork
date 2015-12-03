@@ -72,7 +72,7 @@ public class Question1 {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			String ipTxt = ipTxtField.getText();
+			String ipTxt = ipTxtField.getText().trim();
 			opTxtField.setText(Integer.toString(ipTxt.length()));
 
 		}
@@ -83,7 +83,7 @@ public class Question1 {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			String ipTxt = ipTxtField.getText();
+			String ipTxt = ipTxtField.getText().trim();
 			opTxtField.setText(revString(ipTxt));
 
 		}
@@ -102,17 +102,23 @@ public class Question1 {
 	class removeDuplicatesEvent implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			String ipTxt = ipTxtField.getText();
+			String ipTxt = ipTxtField.getText().trim();
 			opTxtField.setText(remDuplicate(ipTxt));
 
 		}
 
 		private String remDuplicate(String input) {
 			String output = new String();
-			for (int index = 0; index < input.length(); index++) {
-				if (input.charAt(index % input.length()) != input.charAt((index + 1) % input.length())) {
-					output = output + input.charAt(index);
-
+			for (int i = 0; i < input.length(); i++) {
+				Boolean found = false;
+				for (int j = 0; j < output.length(); j++) {
+					if (input.charAt(i) == output.charAt(j)) {
+						found = true;
+						break; // don't need to iterate further
+					}
+				}
+				if (found == false) {
+					output = output + input.charAt(i);
 				}
 			}
 			return output;
