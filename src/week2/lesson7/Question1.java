@@ -57,7 +57,7 @@ public class Question1 extends JFrame {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 250);
 		contentPane = new JPanel();
-		getContentPane().add(contentPane);
+		add(contentPane);
 
 		contentPane.setLayout(null);
 
@@ -163,7 +163,12 @@ public class Question1 extends JFrame {
 	}
 
 	private void populateOpTxtField() {
-
+		kmTxtField.setText("");
+		kgTxtField.setText("");
+		ltrTxtField.setText("");
+		centTxtField.setText("");
+		
+		
 		if (!(mileTxtField.getText().trim().equals(""))) {
 			double mileVal = Double.parseDouble(mileTxtField.getText().trim()) * 1.60934;
 			kmTxtField.setText(String.format("%.3f", mileVal));
