@@ -16,6 +16,7 @@ import javax.swing.JRadioButton;
 
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
+import javax.swing.SwingConstants;
 
 public class ExtraCredit {
 
@@ -23,8 +24,8 @@ public class ExtraCredit {
 
 	private JPanel contextPane;
 
-	private JLabel fNameLbl, lNameLbl, streetLbl, cityLbl, stateLbl, countryLbl, genderLbl, courseLbl, sessionLbl,
-			msgLbl;
+	private JLabel mumLbl, fNameLbl, lNameLbl, streetLbl, cityLbl, stateLbl, countryLbl, genderLbl, courseLbl,
+			sessionLbl, msgLbl;
 
 	private JTextField fNameTxtField, lNameTxtField, streetTxtField, cityTxtField, stateTxtField, countryTxtField;
 
@@ -42,6 +43,7 @@ public class ExtraCredit {
 	private String[] courses = { "Java", "C#", "Python", "Lisp", "Oracle", "Php" };
 
 	ExtraCredit() {
+		mumLbl = new JLabel("<html>Welcome to Maharishi University of Management <br>Online class registration form");
 		fNameLbl = new JLabel("First Name: ");
 		lNameLbl = new JLabel("Last Name: ");
 		streetLbl = new JLabel("Street: ");
@@ -95,7 +97,13 @@ public class ExtraCredit {
 
 		int startX = 40;
 		int startY = 40;
-
+		
+		mumLbl.setBounds(startX + 40, startY, 300, 60);
+		mumLbl.setHorizontalAlignment(SwingConstants.CENTER);
+		contextPane.add(mumLbl);
+		
+		startY += 60;
+		
 		fNameLbl.setBounds(startX, startY, width, height);
 		contextPane.add(fNameLbl);
 
@@ -246,7 +254,7 @@ public class ExtraCredit {
 			System.out.println(morningSessionCheckBox.isSelected());
 			System.out.println(afternoonSessionCheckBox.isSelected());
 			System.out.println(eveningSessionCheckBox.isSelected());
-			if (!morningSessionCheckBox.isSelected()&& !afternoonSessionCheckBox.isSelected()
+			if (!morningSessionCheckBox.isSelected() && !afternoonSessionCheckBox.isSelected()
 					&& !eveningSessionCheckBox.isSelected()) {
 				validation = false;
 				altertMsg = altertMsg + "\nChoose a Session";
