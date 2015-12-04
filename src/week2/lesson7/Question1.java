@@ -40,16 +40,9 @@ public class Question1 extends JFrame {
 	 * Launch the application.
 	 */
 	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					Question1 frame = new Question1();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
+
+		Question1 frame = new Question1();
+
 	}
 
 	/**
@@ -60,7 +53,7 @@ public class Question1 extends JFrame {
 		int startY = 20;
 		int width = 70;
 		int height = 20;
-
+		setVisible(true);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 250);
 		contentPane = new JPanel();
@@ -149,7 +142,7 @@ public class Question1 extends JFrame {
 		centTxtField = new JTextField(10);
 		centTxtField.setBounds(startX, startY, width, height);
 		contentPane.add(centTxtField);
-		
+
 		mileLabel.setHorizontalAlignment(SwingConstants.RIGHT);
 		kmLabel.setHorizontalAlignment(SwingConstants.RIGHT);
 		kgLabel.setHorizontalAlignment(SwingConstants.RIGHT);
@@ -164,19 +157,32 @@ public class Question1 extends JFrame {
 		calculateBtn = new Button("Calculate");
 		calculateBtn.setBounds(startX, startY, width, height);
 		calculateBtn.addActionListener(evt -> {
-			double mileVal = Double.parseDouble(mileTxtField.getText().trim()) * 1.60934;
-			double kgVal = Double.parseDouble(pndTxtField.getText().trim()) * 0.453592;
-			double ltrVal = Double.parseDouble(galTxtField.getText().trim()) * 3.78541;
-			double centVal = (Double.parseDouble(fhtTxtField.getText().trim()) - 32) / 1.8;
-
-			kmTxtField.setText(String.format("%.3f", mileVal));
-			kgTxtField.setText(String.format("%.3f", kgVal));
-			ltrTxtField.setText(String.format("%.3f", ltrVal));
-			centTxtField.setText(String.format("%.3f", centVal));
-
+			populateOpTxtField();
 		});
-
 		contentPane.add(calculateBtn);
+	}
+
+	private void populateOpTxtField() {
+
+		if (!(mileTxtField.getText().trim().equals(""))) {
+			double mileVal = Double.parseDouble(mileTxtField.getText().trim()) * 1.60934;
+			kmTxtField.setText(String.format("%.3f", mileVal));
+		}
+
+		if (!(pndTxtField.getText().trim().equals(""))) {
+			double kgVal = Double.parseDouble(pndTxtField.getText().trim()) * 0.453592;
+			kgTxtField.setText(String.format("%.3f", kgVal));
+		}
+
+		if (!(galTxtField.getText().trim().equals(""))) {
+			double ltrVal = Double.parseDouble(galTxtField.getText().trim()) * 3.78541;
+			ltrTxtField.setText(String.format("%.3f", ltrVal));
+		}
+
+		if (!(fhtTxtField.getText().trim().equals(""))) {
+			double centVal = (Double.parseDouble(fhtTxtField.getText().trim()) - 32) / 1.8;
+			centTxtField.setText(String.format("%.3f", centVal));
+		}
 	}
 
 }
