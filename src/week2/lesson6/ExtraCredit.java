@@ -1,21 +1,21 @@
 package week2.lesson6;
 
-import java.awt.FlowLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
-import javax.swing.JCheckBoxMenuItem;
+
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
-import javax.swing.JRadioButtonMenuItem;
+
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
-import javax.swing.JToggleButton;
-import javax.xml.ws.FaultAction;
 
 public class ExtraCredit {
 
@@ -32,10 +32,12 @@ public class ExtraCredit {
 	private JRadioButton maleRadioButton;
 	private JRadioButton femaleRadioButton;
 
-	private ButtonGroup sessionGroup;
+	// private ButtonGroup sessionGroup;
 	private JCheckBox morningSessionCheckBox, afternoonSessionCheckBox, eveningSessionCheckBox;
-	private JComboBox courseCombo;
+	private JComboBox<String> courseCombo;
 	private JTextArea msgTxtArea;
+
+	private JButton submitBtn;
 
 	private String[] courses = { "Java", "C#", "Python", "Lisp", "Oracle", "Php" };
 
@@ -64,17 +66,19 @@ public class ExtraCredit {
 		genderGroup.add(maleRadioButton);
 		genderGroup.add(femaleRadioButton);
 
-		courseCombo = new JComboBox(courses);
+		courseCombo = new JComboBox<String>(courses);
 
-		sessionGroup = new ButtonGroup();
+		// sessionGroup = new ButtonGroup();
 		morningSessionCheckBox = new JCheckBox("Morning");
-		sessionGroup.add(morningSessionCheckBox);
+		// sessionGroup.add(morningSessionCheckBox);
 		afternoonSessionCheckBox = new JCheckBox("Afternoon");
-		sessionGroup.add(afternoonSessionCheckBox);
+		// sessionGroup.add(afternoonSessionCheckBox);
 		eveningSessionCheckBox = new JCheckBox("Evening");
-		sessionGroup.add(eveningSessionCheckBox);
+		// sessionGroup.add(eveningSessionCheckBox);
 
 		msgTxtArea = new JTextArea(80, 30);
+
+		submitBtn = new JButton("Submit");
 
 		topFrame = new JFrame();
 		topFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -170,8 +174,12 @@ public class ExtraCredit {
 		contextPane.add(sessionLbl);
 
 		startX += width;
-		sessionCheckMenu.setBounds(startX, startY, width, height);
-		contextPane.add(sessionCheckMenu);
+		morningSessionCheckBox.setBounds(startX, startY, width, height);
+		contextPane.add(morningSessionCheckBox);
+		afternoonSessionCheckBox.setBounds(startX + width, startY, width, height);
+		contextPane.add(afternoonSessionCheckBox);
+		eveningSessionCheckBox.setBounds(startX + width + width, startY, width, height);
+		contextPane.add(eveningSessionCheckBox);
 
 		startX = 40;
 		startY += height;
@@ -181,6 +189,80 @@ public class ExtraCredit {
 		startX += width;
 		msgTxtArea.setBounds(startX, startY, width + 100, height + 30);
 		contextPane.add(msgTxtArea);
+
+		startX = 40 + width / 2;
+		startY += height + 40;
+		submitBtn.setBounds(startX, startY, width, height);
+		contextPane.add(submitBtn);
+
+		SubmitAction sa = new SubmitAction();
+		submitBtn.addActionListener(sa);
+
+	}
+
+	class SubmitAction implements ActionListener {
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			JOptionPane.showMessageDialog(null, validate());
+		}
+
+		private String validate() {
+			String altertMsg = "";
+			Boolean validation = true;
+
+			if (fNameTxtField.getText().trim().equals("")) {
+				validation = false;
+				altertMsg = altertMsg + "First Name can't be Empty";
+			}
+			if (lNameTxtField.getText().trim().equals("")) {
+				validation = false;
+				altertMsg = altertMsg + "\nLast Name can't be Empty";
+			}
+			if (streetTxtField.getText().trim().equals("")) {
+				validation = false;
+				altertMsg = altertMsg + "\nStreet can't be Empty";
+			}
+			if (cityTxtField.getText().trim().equals("")) {
+				validation = false;
+				altertMsg = altertMsg + "\nCity can't be Empty";
+			}
+			if (stateTxtField.getText().trim().equals("")) {
+				validation = false;
+				altertMsg = altertMsg + "\nState can't be Empty";
+			}
+			if (countryTxtField.getText().trim().equals("")) {
+				validation = false;
+				altertMsg = altertMsg + "\nCountry can't be Empty";
+			}
+			if (genderGroup.getSelection() == null) {
+				validation = false;
+				altertMsg = altertMsg + "\nChoose a gender";
+			}
+			if (courseCombo.getSelectedItem() == null) {
+				validation = false;
+				altertMsg = altertMsg + "\nChoose a Course";
+			}
+			System.out.println(morningSessionCheckBox.isSelected());
+			System.out.println(afternoonSessionCheckBox.isSelected());
+			System.out.println(eveningSessionCheckBox.isSelected());
+			if (!morningSessionCheckBox.isSelected()&& !afternoonSessionCheckBox.isSelected()
+					&& !eveningSessionCheckBox.isSelected()) {
+				validation = false;
+				altertMsg = altertMsg + "\nChoose a Session";
+			}
+
+			if (msgTxtArea.getText().trim().equals("")) {
+				validation = false;
+				altertMsg = altertMsg + "\nMessage Text can't be Empty";
+			}
+
+			if (!validation)
+				return altertMsg.trim();
+
+			return "Successfully Registered";
+
+		}
 
 	}
 
