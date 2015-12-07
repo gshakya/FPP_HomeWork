@@ -1,6 +1,6 @@
 package week1.lesson5.Question2;
 
-public class Execution {
+public class Main {
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
