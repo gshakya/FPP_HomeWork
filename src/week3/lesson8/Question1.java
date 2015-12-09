@@ -1,4 +1,4 @@
-package week2.lesson8;
+package week3.lesson8;
 
 class Person {
 	private String lastName;
