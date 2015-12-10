@@ -175,6 +175,33 @@ class MyStringLinkedList {
 		System.out.println(str);
 	}
 
+	public Object getFirst() {
+		if (this.isEmpty())
+			return null;
+		return header;
+	}
+
+	public Object getLast() {
+		if (this.isEmpty())
+			return null;
+		Node travellinNode = header;
+		while (travellinNode.next != null) {
+			travellinNode = travellinNode.next;
+		}
+		return travellinNode;
+	}
+
+	public void removeFirst() {
+		header.next.previous = null;
+		header = header.next;
+	}
+
+	public void removeLast() {
+		Node last = (Node) getLast();
+		last.previous.next = null;
+		last.previous = null;
+	}
+
 	public class Node {
 		String value;
 		Node next;
@@ -237,9 +264,25 @@ public class Question3 {
 		mySL.postAddNode(mySL.findItem("Orange Juice"), "Peach Sauce");
 		System.out.println(mySL);
 		mySL.printReverse();
-		mySL.deleteList();
+		// -->[Apple Pie]-->[Blueberry Muffin]-->[Carrot Cake]-->[Danish
+		// Delight]-->[Mango Smoothie]-->[Orange Juice]-->[Peach Sauce]-->[NULL]
+		// ==>[Peach Sauce]==>[Orange Juice]==>[Mango Smoothie]==>[Danish
+		// Delight]==>[Carrot Cake]==>[Blueberry Muffin]==>[Apple Pie]==>[NULL]
+		System.out.println(mySL.Size());
+
+		System.out.println(mySL.getFirst());
+		System.out.println(mySL.getLast());
+		mySL.removeFirst();
 		System.out.println(mySL);
 		mySL.printReverse();
+
+		mySL.removeLast();
+		System.out.println(mySL);
+		mySL.printReverse();
+
+		// mySL.deleteList();
+		// System.out.println(mySL);
+		// mySL.printReverse();
 	}
 
 }
