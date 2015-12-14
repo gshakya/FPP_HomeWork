@@ -3,126 +3,121 @@ package week3.lesson9;
 public class Question2 {
 
 	public static void main(String[] args) {
-		Queue que = new Queue();
+		Queue que = new Queue(5);
 		System.out.println(que.isEmpty());
 		System.out.println(que);
-		que.add(new QueueNode(5));
+		que.add(5);
 		System.out.println(que.isEmpty());
 		System.out.println(que);
-		que.add(new QueueNode(7));
+		que.add(7);
 		System.out.println(que);
-		que.add(new QueueNode(6));
+		que.add(6);
 		System.out.println(que);
-		que.add(new QueueNode(9));
+		que.add(9);
 		System.out.println(que);
 		System.out.println(que);
-		que.add(new QueueNode(1));
+		que.add(1);
 		System.out.println(que);
-		que.add(new QueueNode(10));
+		que.add(10);
 		System.out.println(que);
-		que.add(new QueueNode(2));
+		que.add(2);
 		System.out.println(que);
-		que.add(new QueueNode(4));
+		que.add(4);
 		System.out.println(que);
-		que.add(new QueueNode(4));
+		que.add(4);
 		System.out.println(que);
-		que.add(new QueueNode(8));
+		que.add(8);
 		System.out.println(que);
-		que.add(new QueueNode(3));
-		System.out.println(que);
-
-		System.out.println(que.size());
-
-		System.out.println(que.peek());
-
-		System.out.println(que.remove());
-		System.out.println(que.remove());
-		System.out.println(que.remove());
-		System.out.println(que.remove());
-		System.out.println(que.remove());
-		System.out.println(que.remove());
-		System.out.println(que.remove());
-		System.out.println(que.remove());
-		System.out.println(que.remove());
-		System.out.println(que.remove());
-		System.out.println(que.remove());
-		System.out.println(que.remove());
-		
+		que.add(3);
 		System.out.println(que);
 
-	}
-}
+		System.out.println("Array Size:" + que.size());
 
-class QueueNode {
+		System.out.println("Array Peek:" + que.peek());
+		System.out.println("Starting to Remove");
 
-	int data;
-	QueueNode next;
+		System.out.println(que.remove());
+		System.out.println(que.remove());
+		System.out.println(que.remove());
+		System.out.println(que.remove());
+		System.out.println(que.remove());
+		System.out.println(que.remove());
+		System.out.println(que.remove());
+		System.out.println(que.remove());
+		System.out.println(que.remove());
+		System.out.println(que.remove());
+		System.out.println(que.remove());
+		// System.out.println(que.remove()); Null Pointer Exception because the array is empty
 
-	QueueNode(int data) {
-		this.data = data;
+		System.out.println(que);
 
 	}
-
-	@Override
-	public String toString() {
-		return String.valueOf(data);
-	}
-
 }
 
 class Queue {
-	private int size;
-	private QueueNode head;
+	private int val[];
+	private int size = 0;
+	private final int INITIAL_SIZE;
 
 	public boolean isEmpty() {
-		if (head == null)
-			return true;
-		return false;
+		return (size == 0 ? true : false);
+	}
+
+	public Queue() {
+		INITIAL_SIZE = 10;
+
+		val = new int[INITIAL_SIZE];
+	}
+
+	public Queue(int max) {
+		INITIAL_SIZE = max;
+		val = new int[INITIAL_SIZE];
+	}
+
+	public int remove()// Pass Last Name as an argument
+	{
+		if (isEmpty()) {
+			return (Integer) null;
+		}
+		int res = val[0];
+		int[] temp = new int[val.length];
+		System.arraycopy(val, 1, temp, 0, val.length - 1);
+		val = temp;
+		size--;
+		return res;
+	}
+
+	public void add(int data)// Insert at last
+	{
+		if (size >= val.length)
+			resize();
+		val[size++] = data;
+	}
+
+	public int peek() {
+		if (isEmpty())
+			return (Integer) null;
+		return val[0];
 	}
 
 	public int size() {
 		return size;
 	}
 
-	public QueueNode peek() {
-		return head;
-	}
-
-	public QueueNode remove() {
-		if (isEmpty())
-			return null;
-		QueueNode res = head;
-		head = head.next;
-		return res;
-	}
-
-	public void add(QueueNode n) {
-		if (isEmpty()) {
-			head = n;
-			size++;
-			return;
-		}
-
-		QueueNode travellingNode = head;
-		while (travellingNode.next != null) {
-			travellingNode = travellingNode.next;
-		}
-		travellingNode.next = n;
-		size++;
+	private void resize() {
+		System.out.println("Array Resizing...");
+		int newSize = (2 * val.length);
+		int[] temp = new int[newSize];
+		System.arraycopy(val, 0, temp, 0, size);
+		val = temp;
 	}
 
 	@Override
 	public String toString() {
-		String opString = "";
-		QueueNode travellingNode = head;
-
-		while (travellingNode != null) {
-
-			opString = opString + travellingNode + " => ";
-			travellingNode = travellingNode.next;
-
+		String res = "";
+		for (int i = 0; i < size; ++i) {
+			res = res + val[i] + "=>";
 		}
-		return opString + "NULL";
+		return res;
 	}
-
 }
